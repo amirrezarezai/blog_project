@@ -28,25 +28,3 @@ class RegisterSerializer(serializers.ModelSerializer):
         account.save()
 
         return account
-
-
-class LoginSerializer(serializers.Serializer):
-    email = serializers.EmailField(style={'input_type': 'email'}, write_only=True)
-    password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
-
-    def validate(self, attrs):
-        email = attrs['email']
-        password = attrs['password']
-
-        if email and password:
-            user = authenticate(request=self.context.get('request'), email=email, password=password)
-            if not user:
-                msg = 'user is not registered'
-                raise serializers.ValidationError(msg, code='authorization')
-
-        else:
-            msg = 'Must include email and password'
-            raise serializers.ValidationError(msg, code='authentication')
-
-        attrs['user'] = user
-        return attrs

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .serializers import RegisterSerializer,LoginSerializer
+from .serializers import RegisterSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import generics ,status
@@ -24,20 +24,3 @@ def registration_views(request):
             dataa = serializer.errors
 
         return Response(dataa, status=status.HTTP_201_CREATED)
-
-@api_view(['POST', ])
-def login_view(request):
-    if request.method == 'POST':
-        data = {}
-
-        serializer = LoginSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        user = serializer.validated_data['user']
-        token, created = Token.objects.get_or_create(user=user)
-
-        data['response'] = 'Login Successfully'
-        data['username'] = serializer.validated_data['user'].username
-        data['token'] = token.key
-
-        return Response(data)
