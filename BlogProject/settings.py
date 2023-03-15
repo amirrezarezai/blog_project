@@ -1,4 +1,5 @@
 from pathlib import Path
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -129,3 +130,4 @@ SWAGGER_SETTINGS = {
     'LOGIN_URL':'rest_framework:login',
     'LOGOUT_URL':'rest_framework:logout',
 }
+django_heroku.settings(locals())
