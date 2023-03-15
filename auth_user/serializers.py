@@ -31,11 +31,16 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class ChangePasswordSerializer(serializers.Serializer):
-    model = User
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)
 
+    class Meta:
+        model = User
+        fields = ('old_password','new_password')
+
 
 class ChangeUsernameSerializers(serializers.Serializer):
-    model = User
     new_username = serializers.CharField(required=True)
+    class Meta:
+        model = User
+        fields = ('new_username',)
